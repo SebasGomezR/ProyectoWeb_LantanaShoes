@@ -23,10 +23,11 @@ function obtenerBanners(){
     return map.values();
 }
 
-
+// Obtener la lista de calzados almacenados, filtrando por categoría si se especifica
 function obtenerCalzado(categoria = "todos") {
     const map = obtenerMap("calzado");      
     let productos = [];
+    
     if (categoria === null || categoria === "todos") {
         productos = map.values();
     } else {
@@ -69,22 +70,32 @@ function mostrarCarrito() {
         });
         const totalElement = document.getElementById('total');
         totalElement.textContent = precio.toFixed(2);
+
+        document.getElementById('contadorCarrito').textContent = carrito.length;
 }
 
 
 // Agregar un curso al carrito de compras
-function agregarProducto(producto) {
+function agregarProducto(producto, actualizarCarrito = true) {
     let carrito = obtenerCarrito();
     carrito.push(producto);
+
     sessionStorage.setItem("carrito", JSON.stringify(carrito));
-    mostrarCarrito();
+    sessionStorage.setItem("contadorCarrito", carrito.length);
+
+    if (actualizarCarrito == true) {
+        mostrarCarrito();
+    }
 }
- 
+
 // Eliminar un curso del carrito de compras
-function eliminarProducto(index) {
+function eliminarProducto(posicion) {
     let carrito = obtenerCarrito();
-    carrito.splice(index, 1);
+    carrito.splice(posicion, 1);
+
     sessionStorage.setItem("carrito", JSON.stringify(carrito));
+    sessionStorage.setItem("contadorCarrito", carrito.length);
+
     mostrarCarrito();
 }
  
@@ -93,4 +104,14 @@ function vaciarCarrito() {
     let carrito = [];
     sessionStorage.setItem("carrito", JSON.stringify(carrito));
     mostrarCarrito();
+}
+
+// Obtener un calzado por su código
+function obtenerCalzadoPorCodigo(codigoCalzado) {
+    const calzado = obtenerMap("calzado");
+    const respuesta = calzado.get(codigoCalzado);
+    if (!respuesta) {
+        throw new Error(`No se encontró el calzado con el código: ${codigoCalzado}`);
+    }
+    return respuesta;
 }
