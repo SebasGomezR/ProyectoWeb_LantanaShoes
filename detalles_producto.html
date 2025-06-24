@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Lantana Shoes</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/templatemo.css">
+    <link rel="stylesheet" href="css/custom.css">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="css/fontawesome.min.css">
+
+    <script src="db-simulacion/funciones.js"></script>
+    <script src="db-simulacion/datos.js"></script>
+</head>
+
+<body>
+
+    <div id="header"></div>
+
+    <!-- Detalles de los productos -->
+
+    <!-- Open Content -->
+    <section class="bg-light">
+        <div class="container pb-5">
+            <div class="row">
+                <div class="col-lg-5 mt-5">
+                    <div class="card mb-3">
+                        <img id="imagenProducto" class="card-img img-fluid" src="" alt="Card image cap">
+                    </div>
+                </div>
+                <!-- col end -->
+                <div class="col-lg-7 mt-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="h2" id="nombreProducto"> </h1>
+                            <p class="h3 py-2" id="precioProducto"> </p>
+                            <p class="py-2" id="clasificacionProducto">
+                                
+                            </p>
+
+                            <h6>Descripción:</h6>
+                            <p id="descripcionProducto"> </p>
+
+                            <!-- A considerar 
+                            <ul class="list-inline" id="especificaciones">
+                                <li class="list-inline-item">
+                                    <h6>Avaliable Color :</h6>
+                                </li>
+                                <li class="list-inline-item">
+                                    <p class="text-muted"><strong>White / Black</strong></p>
+                                </li>
+                            </ul>-->
+
+                            <h6>Especificaciones:</h6>
+                            <ul class="list-unstyled pb-3" id="especificacionesproducto">
+                            </ul>
+                            <div class="row pb-3">
+                                <div class="col d-grid">
+                                    <a class="btn btn-success btn-lg" name="submit" value="buy" href="#" id="botonAgregar">Agregar</a>
+                                </div>
+                                <div class="col d-grid">
+                                    <button class="btn btn-success btn-lg" name="submit" value="addtocard" onclick="window.history.back()">Volver</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const codigoProducto = urlParams.get('codigoProducto');
+
+        const producto = obtenerCalzadoPorCodigo(codigoProducto);
+
+        if (producto) {
+            document.getElementById('imagenProducto').src = producto.imagen;
+            document.getElementById('nombreProducto').textContent = producto.nombre;
+            document.getElementById('precioProducto').textContent = `$${producto.precio.toFixed(2)}`;
+            document.getElementById('descripcionProducto').textContent = producto.descripcion;
+
+            const especificacionesproducto = document.getElementById('especificacionesproducto');
+            producto.especificaciones.forEach(function(especificacion) {
+                const li = document.createElement('li');
+                li.textContent = especificacion;
+                especificacionesproducto.appendChild(li);
+            });
+
+
+            // Calificación
+            const estrellas = '<i class="text-warning fa fa-star"></i>'.repeat(producto.calificacion) +
+                              '<i class="text-secondary fa fa-star"></i>'.repeat(5 - producto.calificacion);
+            document.getElementById('clasificacionProducto').innerHTML = estrellas;
+        }
+
+        // Agregar evento al botón
+        document.getElementById('botonAgregar').addEventListener('click', function() {
+            agregarProducto(producto, false);
+            window.history.back(); // Volver a la página anterior después de agregar al carrito
+        });
+    </script>
+    <!-- Close Content -->
+
+    <!-- Fin de los detalles -->
+
+
+    <div id="footer"></div>
+
+
+    <!-- Start Script -->
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/templatemo.js"></script>
+    <script src="js/custom.js"></script>
+    <!-- End Script -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            cargarFragmento("header", "header.html");
+            cargarFragmento("footer", "footer.html");
+        });
+    </script>
+
+</body>
+</html>

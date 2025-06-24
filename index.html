@@ -15,13 +15,108 @@
     <!-- Load fonts style after rendering the layout styles -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
     <link rel="stylesheet" href="css/fontawesome.min.css">
+
+    <script src="db-simulacion/datos.js"></script>
+    <script src="db-simulacion/funciones.js"></script>
 </head>
 
 <body>
 
     <div id="header"></div>
+
+
+
+    <!-- Start Banner Hero -->
+    <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
+        <ol class="carousel-indicators">    
+            <!-- Los indicadores se agregarán aquí dinámicamente -->
+            <!--<li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="0" class="active"></li>-->
+        </ol>
+        <div class="carousel-inner">  
+            <!-- Los banners se agregarán aquí dinámicamente -->
+        </div>
+        <a class="carousel-control-prev text-decoration-none w-auto ps-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="prev">
+            <i class="fas fa-chevron-left"></i>
+        </a>
+        <a class="carousel-control-next text-decoration-none w-auto pe-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="next">
+            <i class="fas fa-chevron-right"></i>
+        </a>
+    </div>
+    <script>
+        const banner = obtenerBanners();
+        banner.forEach( (banner, index) => {
+            const carouselItem = document.querySelector('.carousel-inner');
+            const item = document.createElement('div');
+            item.className = 'carousel-item';
+            if( index == 0) {
+                item.classList.add('active');
+            }
+            item.innerHTML = `
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <img class="img-fluid" src="${banner.imagen}" alt="">
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left align-self-center">
+                                <h1 class="h1 text-success"><b>${banner.titulo}</b></h1>
+                                <h3 class="h2">${banner.subtitulo}</h3>
+                                <p>${banner.descripcion}</p>
+                                <p class="text-center">
+                                    <a class="btn btn-success" href="">Ver más</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            carouselItem.appendChild(item);
+
+            //Agregar indicadores al carrusel
+            const indicators = document.querySelector('.carousel-indicators');
+            const indicator = document.createElement('li');
+            indicator.setAttribute('data-bs-target', '#template-mo-zay-hero-carousel');
+            indicator.setAttribute('data-bs-slide-to', index);
+            if (index === 0) {
+                indicator.classList.add('active');
+            }
+            indicators.appendChild(indicator);
+        });
+    </script>
+    <!-- End Banner Hero -->
+
  
-    <p>Cuerpo de la página</p>
+     <!-- Start Categories of The Month -->
+    <section class="container py-5">
+        <div class="row text-center pt-3">
+            <div class="col-lg-6 m-auto">
+                <h1 class="h1">Nuestro Calzado</h1>
+                <p>
+                    Lantana Shoes es una marca de calzado para dama que te ofrece lo mejor
+                    en estilo y comfort, para que luzcas tus prendas de la mejor manera posible.
+                </p>
+            </div>
+        </div>
+        
+        <div class="row" id="categorias"> </div>
+    </section>
+
+    <script>
+        const categorias = obtenerCategorias();
+        categorias.forEach(cat => {
+            const tarjeta = document.createElement('div');
+            tarjeta.className = 'col-12 col-lg-3 col-md-4 col-sm-6 p-5 mt-3 ';
+            tarjeta.innerHTML = `
+                <a href="#"> <img src="${cat.imagen}" class="rounded-circle img-fluid border"> </a>
+                <h5 class="text-center mt-3 mb-3">${cat.nombre}</h5>
+                <p class="text-center"> ${cat.descripcion}</p>
+                <p class="text-center"> <a class="btn btn-success" href="productos.html?categoria=${cat.codigo}">Ver productos</a> </p>
+            `;
+            document.getElementById('categorias').appendChild(tarjeta);
+        });
+    </script>
+
+    <!-- End Categories of The Month -->
  
     <div id="footer"></div>
 

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario de Pago</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <form class="formulario-pago">
+    <h2>Pago en Línea</h2>
+
+    <label for="nombre">Nombre completo</label>
+    <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+
+    <label for="correo">Correo electrónico</label>
+    <input type="email" id="correo" name="correo" placeholder="tucorreo@example.com" required>
+
+    <label for="numero">Número de tarjeta</label>
+    <input type="text" id="numero" name="numero" placeholder="XXXX XXXX XXXX XXXX" required>
+
+    <label for="exp">Fecha de vencimiento</label>
+    <input type="text" id="exp" name="exp" placeholder="MM/AA" required>
+
+    <label for="cvv">Código CVV</label>
+    <input type="number" id="cvv" name="cvv" placeholder="123" required>
+
+    <label for="monto">Monto a pagar</label>
+    <input type="number" id="monto" name="monto" placeholder="Pesos Colombianos" required>
+
+    <button type="submit">Pagar</button>
+  </form>
+
+</body>
+</html>
